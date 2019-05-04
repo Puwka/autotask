@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <v-toolbar app>
+        <v-toolbar color="primary" dark app>
             <v-toolbar-title class="headline text-uppercase">
                 <span>Auto Task Manager</span>
             </v-toolbar-title>
