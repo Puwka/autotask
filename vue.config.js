@@ -1,4 +1,4 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
     configureWebpack: config => {
@@ -6,7 +6,7 @@ module.exports = {
             app: [
                 './frontend/src/main.js'
             ]
-        };
+        }
         config.resolve = {
             ...config.resolve,
             alias: {
@@ -26,7 +26,7 @@ module.exports = {
                 '/Users/puwka/Development/db-emulator-vue/node_modules',
                 '/Users/puwka/Development/db-emulator-vue/node_modules/@vue/cli-service/node_modules'
             ]
-        };
+        }
         config.devServer = {
             ...config.devServer,
             proxy: {
@@ -34,6 +34,6 @@ module.exports = {
                     target: 'http://localhost:3000'
                 }
             }
-        };
+        }
     }
-};
+}
