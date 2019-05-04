@@ -5,12 +5,12 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
     name: 'App',
+    inject: ['$axios'],
     created() {
-        axios.get('/user')
+        this.$axios.get('/api/user').then(res => console.log(res))
     }
 }
 </script>

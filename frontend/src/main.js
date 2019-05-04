@@ -9,24 +9,20 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-axios.defaults.baseURL = 'http://192.168.0.104:3000'
-
 const beforeRequest = request => {
-    const token = localStorage.getItem('token')
-    request.headers.authorization = token
+    request.headers.authorization = localStorage.getItem('token')
     return request
 }
 
-const onSuccess = response => response.data
-
 const onError = error => {
-    console.dir(error.response);
     if (error.response && error.response.status === 401) {
-        localStorage.setItem('token', null)
+        localStorage.setItem('token', null);
         router.push('/auth');
     }
     return Promise.reject(error);
 };
+
+const onSuccess = res => res.data;
 
 axios.interceptors.request.use(beforeRequest)
 axios.interceptors.response.use(onSuccess, onError)
@@ -37,4 +33,7 @@ new Vue({
     router,
     store,
     render: h => h(App),
+    provide: {
+        $axios: axios
+    }
 }).$mount('#app')

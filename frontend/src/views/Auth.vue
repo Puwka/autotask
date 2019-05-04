@@ -37,10 +37,9 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
     name: 'Auth',
+    inject: ['$axios'],
     data() {
         return {
             login: '',
@@ -49,7 +48,7 @@ export default {
     },
     methods: {
         doLogin() {
-            axios.post('/user/signin', { login: this.login, password: this.password })
+            this.$axios.post('/api/user/signin', { login: this.login, password: this.password })
                 .then(res => {
                     localStorage.setItem('token', res.token)
                 })
