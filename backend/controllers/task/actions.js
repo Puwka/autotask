@@ -69,7 +69,7 @@ const putTask = async ctx => {
         title: title || task.title,
         description: description || task.description,
         approximatePoints: points || task.approximatePoints,
-        _executor: (executor && executor._id) || task._executor,
+        _executor: executor || task._executor,
         time: time || task.time,
         tag: tag || task.tag,
         status: status || task.status
