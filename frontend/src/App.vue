@@ -5,12 +5,13 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 
 export default {
     name: 'App',
-    inject: ['$axios'],
+    methods: mapActions(['getUsers']),
     created() {
-        this.$axios.get('/api/user').then(res => console.log(res))
+        this.getUsers()
     }
 }
 </script>
