@@ -4,13 +4,16 @@ const bodyParser = require('koa-bodyparser');
 const path = require('path');
 const config = require('./config');
 const db = require('./db');
+const middlewares = require('./middlewares');
 
 const controllersDir = path.join(__dirname, 'controllers');
 
 db.connect();
 
 const app = new Koa();
-app.use(bodyParser());
+app
+    .use(bodyParser())
+    .use(middlewares.checkAuth);
 
 const files = readDir(controllersDir)
     .filter(file => file.endsWith('.js'));
@@ -24,6 +27,7 @@ files.forEach(file => {
     }
     app.use(controller.routes());
 });
+
 
 
 app.listen(config.PORT, () => console.log(`server spinning on ${config.PORT}`));

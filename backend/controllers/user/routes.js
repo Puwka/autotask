@@ -5,4 +5,5 @@ module.exports = Router()
     .prefix('/user')
     .get('/', actions.getUser)
     .post('/', actions.postCreateUser)
-    .post('/signup', actions.postSignUp);
+    .post('/signup', actions.postSignUp)
+    .post('/signin', actions.postSignIn);
