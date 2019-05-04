@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { encrypt, compare } = require('../../services/crypto');
 
 const { User } = mongoose.models;
 
@@ -14,7 +15,19 @@ const postCreateUser = async ctx => {
     ctx.body = { user };
 };
 
+const postSignUp = async ctx => {
+    const { login, password, name } = ctx.request.body;
+    const user = await User.findOne({ login });
+    const encryptedPass = await encrypt(password);
+    ctx.assert(!user, 400, 'Login is already taken');
+
+    const newUser = new User({ login, name, password: encryptedPass });
+    await newUser.save();
+    ctx.body = { ok: true };
+};
+
 module.exports = {
     getUser,
-    postCreateUser
+    postCreateUser,
+    postSignUp
 };

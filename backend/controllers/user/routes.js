@@ -1,7 +1,8 @@
 const Router = require('koa-router');
-const { getUser, postCreateUser } = require('./actions');
+const actions = require('./actions');
 
 module.exports = Router()
     .prefix('/user')
-    .get('/', getUser)
-    .post('/', postCreateUser);
+    .get('/', actions.getUser)
+    .post('/', actions.postCreateUser)
+    .post('/signup', actions.postSignUp);
