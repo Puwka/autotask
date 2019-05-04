@@ -14,6 +14,7 @@ const controllersDir = path.join(__dirname, 'controllers');
 const app = new Koa();
 app
     .use(bodyParser())
+    .use(middlewares.logger)
     .use(middlewares.checkAuth);
 
 const files = readDir(controllersDir)
@@ -30,4 +31,4 @@ files.forEach(file => {
         .use(controller.allowedMethods());
 });
 
-app.listen(config.PORT, () => console.log(`server spinning on ${config.PORT}`));
+app.listen(config.PORT, '192.168.0.104', () => console.log(`server spinning on ${config.PORT}`));
