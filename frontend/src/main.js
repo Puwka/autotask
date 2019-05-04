@@ -20,7 +20,7 @@ const beforeRequest = request => {
 const onSuccess = response => response.data
 
 const onError = error => {
-    console.dir(error.response);
+    console.dir(error);
     if (error.response && error.response.status === 401) {
         localStorage.setItem('token', null)
         router.push('/auth');

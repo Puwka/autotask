@@ -4,9 +4,10 @@
             <v-toolbar-title class="headline text-uppercase">
                 <span>Auto Task Manager</span>
             </v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-btn flat href="https://github.com/vuetifyjs/vuetify/releases/latest" target="_blank">
-                <span class="mr-2">Latest Release</span>
+            <v-spacer />
+            <v-btn class="white--text" flat @click="logout">
+                Выйти
+                <v-icon right dark>exit_to_app</v-icon>
             </v-btn>
         </v-toolbar>
 
@@ -17,7 +18,10 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
-    name: 'Main'
+    name: 'Main',
+    methods: mapActions(['logout'])
 }
 </script>

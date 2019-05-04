@@ -5,12 +5,13 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { mapActions } from 'vuex'
 
 export default {
     name: 'App',
+    methods: mapActions(['getUsers']),
     created() {
-        axios.get('/user')
+        this.getUsers()
     }
 }
 </script>
