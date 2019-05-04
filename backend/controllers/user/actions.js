@@ -9,12 +9,23 @@ const getUsers = async ctx => {
 };
 
 const postSignUp = async ctx => {
-    const { login, password, name } = ctx.request.body;
+    const {
+        login,
+        password,
+        name,
+        role
+    } = ctx.request.body;
     const user = await User.findOne({ login });
     const encryptedPass = await encrypt(password);
     ctx.assert(!user, 400, 'Login is already taken');
 
-    const newUser = new User({ login, name, password: encryptedPass });
+    const newUser = new User({
+        login,
+        name,
+        role,
+        password: encryptedPass
+    });
+
     await newUser.save();
     ctx.body = { ok: true };
 };

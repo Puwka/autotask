@@ -18,7 +18,6 @@ const checkAuth = async (ctx, next) => {
         if (!foundUser) {
             throw new Error();
         }
-
         ctx.state.user = foundUser;
     } catch (err) {
         ctx.throw(401, 'Unauthorized');

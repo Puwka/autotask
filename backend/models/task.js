@@ -10,7 +10,13 @@ const taskSchema = new mongoose.Schema({
         type: ObjectId,
         ref: 'User',
         index: true
-    }
+    },
+    description: String,
+    tag: {
+        type: String,
+        enum: ['js', 'python', 'html']
+    },
+    deletedAt: Date
 });
 
 mongoose.model('Task', taskSchema);
