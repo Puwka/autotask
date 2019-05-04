@@ -27,12 +27,11 @@ module.exports = {
                 '/Users/puwka/Development/db-emulator-vue/node_modules/@vue/cli-service/node_modules'
             ]
         }
-        console.log(1)
         config.devServer = {
             ...config.devServer,
             proxy: {
                 '/api': {
-                    target: 'http://localhost:3000'
+                    target: 'http://192.168.0.104:3000'
                 }
             }
         }

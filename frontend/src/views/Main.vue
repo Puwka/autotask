@@ -12,7 +12,9 @@
         </v-toolbar>
 
         <v-content>
-            <router-view />
+            <v-container>
+                <router-view />
+            </v-container>
         </v-content>
     </div>
 </template>
@@ -22,6 +24,9 @@ import { mapActions } from 'vuex'
 
 export default {
     name: 'Main',
-    methods: mapActions(['logout'])
+    created() {
+        this.getUser()
+    },
+    methods: mapActions(['logout', 'getUser'])
 }
 </script>
