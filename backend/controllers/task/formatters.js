@@ -9,7 +9,7 @@ const formatTaskList = tasks => {
     tasks.map(task => ({
         id: task._id,
         title: task.title,
-        executor: task.executor,
+        executor: task._executor && task._executor.formatPublic(),
         description: task.description,
         status: task.status,
         tag: task.tag,
@@ -26,7 +26,7 @@ const formatTaskOne = task => ({
     id: task._id,
     title: task.title,
     description: task.description,
-    executor: task._executor.formatPublic(),
+    executor: task._executor && task._executor.formatPublic(),
     points: task.approximatePoints,
     status: task.status,
     time: task.time,

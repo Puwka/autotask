@@ -4,14 +4,15 @@ const formatters = require('./formatters');
 const { Task, User } = mongoose.models;
 
 const paramTask = async (id, ctx, next) => {
-    ctx.state.task = await Task.findById(id)
+    ctx.state.task = await Task.findById(id);
     await next()
 };
 
 const getTasksList = async ctx => {
     const tasks = await Task.find({
         deletedAt: null
-    });
+    })
+        .populate('_executor');
 
     ctx.body = {
         tasks: formatters.formatTaskList(tasks)

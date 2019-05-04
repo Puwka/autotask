@@ -7,7 +7,10 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    approximatePoints: Number,
+    approximatePoints: {
+        type: Number,
+        enum: [1, 2, 4, 8, 16]
+    },
     time: Number,
     _executor: {
         type: ObjectId,

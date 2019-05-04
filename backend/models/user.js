@@ -26,7 +26,7 @@ function formatPublic() {
         name: this.name,
         avaColors: this.avaColors
     }
-};
+}
 
 userSchema.method('formatPublic', formatPublic);
 
