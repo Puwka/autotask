@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['developer', 'manager']
+    },
+    avaColors: {
+        top: String,
+        bottom: String
     }
 });
 

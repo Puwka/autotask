@@ -4,6 +4,8 @@ const formatTaskList = (tasks, role) => {
             id: task._id,
             title: task.title,
             executor: task.executor,
+            description: task.description,
+            tag: task.tag,
             approximatePoints: task.approximatePoints,
             time: task.time
         }))
@@ -21,7 +23,8 @@ const formatTaskOne = task => ({
     title: task.title,
     description: task.description,
     executor: task.executor,
-    time: task.time
+    time: task.time,
+    tag: task.tag
 });
 
 module.exports = {

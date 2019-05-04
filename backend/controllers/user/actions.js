@@ -1,11 +1,16 @@
 const mongoose = require('mongoose');
+const passwordGenerator = require('password-generator');
 const { encrypt, compare } = require('../../services/crypto');
 const { generateJwt } = require('../../services/jwt');
+const formatters = require('./formatters');
 
 const { User } = mongoose.models;
 
-const getUsers = async ctx => {
-    ctx.body = await User.find({}, { _id: false, login: 1 })
+const getUserList = async ctx => {
+    const users = await User.find();
+    ctx.body = {
+        users: formatters.formatUserList(users)
+    }
 };
 
 const postSignUp = async ctx => {
@@ -23,7 +28,11 @@ const postSignUp = async ctx => {
         login,
         name,
         role,
-        password: encryptedPass
+        password: encryptedPass,
+        avaColors: {
+            top: passwordGenerator(7, false, /[A-F1-9]/, '#'),
+            bottom: passwordGenerator(7, false, /[A-F1-9]/, '#')
+        }
     });
 
     await newUser.save();
@@ -41,8 +50,15 @@ const postSignIn = async ctx => {
     ctx.body = { token };
 };
 
+const getUser = async ctx => {
+    ctx.body = {
+        user: formatters.formatUserOne(ctx.state.user)
+    }
+};
+
 module.exports = {
-    getUsers,
+    getUserList,
+    getUser,
     postSignUp,
     postSignIn
 };

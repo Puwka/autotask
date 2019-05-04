@@ -5,7 +5,7 @@ const { Task } = mongoose.models;
 
 const paramTask = async ctx => {
     ctx.state.task = await Task.findById(ctx.param.task)
-}
+};
 
 const getTasksList = async ctx => {
     const { role } = ctx.state.user;
@@ -30,13 +30,17 @@ const deleteTask = async ctx => {
 };
 
 const postTaskCreate = async ctx => {
-    const { title, description } = ctx.request.body;
+    const { title, description, tag } = ctx.request.body;
     const task = new Task({
         title,
-        description
+        description,
+        tag
     });
-
-    await task.save();
+    try {
+        await task.save();
+    } catch (err) {
+        ctx.throw(400, 'Task was not created')
+    }
 
     ctx.body = {
         task: formatters.formatTaskOne(task)
