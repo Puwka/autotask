@@ -10,7 +10,7 @@
                         <v-card-text>
                             <v-form @submit.prevent>
                                 <v-text-field
-                                    v-model="login"
+                                    v-model="name"
                                     prepend-icon="person"
                                     name="login"
                                     label="Login"
@@ -37,21 +37,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
     name: 'Auth',
     inject: ['$axios'],
     data() {
         return {
-            login: '',
+            name: '',
             password: ''
         }
     },
     methods: {
+        ...mapActions(['login']),
         doLogin() {
-            this.$axios.post('/api/user/signin', { login: this.login, password: this.password })
-                .then(res => {
-                    localStorage.setItem('token', res.token)
-                })
+            this.login({ login: this.name, password: this.password })
         }
     }
 }
