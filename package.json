@@ -16,6 +16,7 @@
     "koa": "^2.7.0",
     "koa-bodyparser": "^4.2.1",
     "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.6",
     "material-design-icons-iconfont": "^3.0.3",
     "mongodb": "^3.2.3",
     "mongoose": "^5.5.5",

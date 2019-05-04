@@ -4,16 +4,8 @@ const { generateJwt } = require('../../services/jwt');
 
 const { User } = mongoose.models;
 
-const getUser = async ctx => {
-    ctx.body = 123123;
-};
-
-const postCreateUser = async ctx => {
-    const name = 'perdo';
-    const user = new User({ name });
-    await user.save();
-
-    ctx.body = { user };
+const getUsers = async ctx => {
+    ctx.body = await User.find({}, { _id: false, login: 1 })
 };
 
 const postSignUp = async ctx => {
@@ -39,8 +31,7 @@ const postSignIn = async ctx => {
 };
 
 module.exports = {
-    getUser,
-    postCreateUser,
+    getUsers,
     postSignUp,
     postSignIn
 };

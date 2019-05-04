@@ -4,9 +4,6 @@ const { verifyJwt } = require('../services/jwt');
 const { User } = mongoose.models;
 
 const checkAuth = async (ctx, next) => {
-    if (!ctx.request.path.startsWith('/api')) {
-        return next();
-    }
 
     if (['/user/signin', '/user/signup'].includes(ctx.request.path)) {
         return next();
@@ -22,11 +19,11 @@ const checkAuth = async (ctx, next) => {
 
         ctx.state.user = foundUser;
     } catch (err) {
-        ctx.throw(401, 'Unathorized');
+        ctx.throw(401, 'Unauthorized');
     }
     await next();
 };
 
 module.exports = {
     checkAuth
-}
+};

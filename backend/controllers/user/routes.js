@@ -3,7 +3,6 @@ const actions = require('./actions');
 
 module.exports = Router()
     .prefix('/user')
-    .get('/', actions.getUser)
-    .post('/', actions.postCreateUser)
+    .get('/', actions.getUsers)
     .post('/signup', actions.postSignUp)
     .post('/signin', actions.postSignIn);

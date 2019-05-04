@@ -2,17 +2,22 @@ const Koa = require('koa');
 const readDir = require('recursive-readdir-sync');
 const bodyParser = require('koa-bodyparser');
 const path = require('path');
+const cors = require('koa2-cors');
 const config = require('./config');
 const db = require('./db');
+
+db.connect();
+
 const middlewares = require('./middlewares');
 
 const controllersDir = path.join(__dirname, 'controllers');
 
-db.connect();
-
 const app = new Koa();
 app
     .use(bodyParser())
+    .use(cors({
+        origin: '*'
+    }))
     .use(middlewares.checkAuth);
 
 const files = readDir(controllersDir)
@@ -28,6 +33,4 @@ files.forEach(file => {
     app.use(controller.routes());
 });
 
-
-
-app.listen(config.PORT, () => console.log(`server spinning on ${config.PORT}`));
+app.listen(config.PORT, '192.168.0.104', () => console.log(`server spinning on ${config.PORT}`));
