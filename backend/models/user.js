@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const { ObjectId } = mongoose.Schema.Types;
+
 const userSchema = new mongoose.Schema({
     login: String,
     name: String,
@@ -11,6 +13,15 @@ const userSchema = new mongoose.Schema({
     avaColors: {
         top: String,
         bottom: String
+    },
+    tasks: {
+        type: [
+            {
+                type: ObjectId,
+                ref: 'Task'
+            }
+        ],
+        default: []
     },
     spec: {
         type: String,

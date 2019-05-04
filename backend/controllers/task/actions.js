@@ -65,6 +65,14 @@ const putTask = async ctx => {
         ctx.throw(403, 'Permission denied')
     }
 
+    if (executor) {
+        const executorAttached = await User.findById(executor);
+        if (!executorAttached.tasks.includes(task._id)) {
+            executorAttached.tasks.push(task._id);
+        }
+        await executorAttached.save()
+    }
+
     task.set({
         title: title || task.title,
         description: description || task.description,
@@ -83,6 +91,22 @@ const putTask = async ctx => {
     }
 };
 
+const findAbility = ({ tagCoef, tag, userTasks }) => {
+    userTasks = userTasks.filter(task => task.tag === tag)
+        .filter(task => task.status === 'done')
+        .map(task => ({
+            approx: task.approximatePoints,
+            actual: task.time
+        }))
+        .map(task => task.approx / task.actual);
+    if (!userTasks.length) {
+        return 0
+    }
+    const coef = (userTasks.reduce((prev, curr) => prev + curr, 0)) / userTasks.length;
+    return coef / tagCoef;
+};
+
+
 const getTask = async ctx => {
     const { task } = ctx.state;
 
@@ -92,8 +116,25 @@ const getTask = async ctx => {
     const suggestedExecutors = await User
         .find({
             role: 'developer'
-        });
+        })
+        .populate('tasks');
 
+    const tasks = await Task.aggregate([
+        {
+            $match: {
+                tag,
+                status: 'done'
+            }
+        },
+        {
+            $project: {
+                _id: 1,
+                coef: { $divide: ['$approximatePoints', '$time'] }
+            }
+        }
+    ]);
+
+    const tagCoef = tasks.reduce((prev, curr) => prev + curr.coef, 0) / tasks.length;
 
     ctx.body = {
         task: formatters.formatTaskOne(task),
@@ -101,11 +142,12 @@ const getTask = async ctx => {
             .map(user => ({
                 id: user._id,
                 name: user.name,
-                score: user.spec === tag ? 1 : 0.1
+                score: findAbility({ userTasks: user.tasks, tag, tagCoef })
             }))
             .sort((a, b) => b.score - a.score)
     }
 };
+
 
 module.exports = {
     paramTask,
