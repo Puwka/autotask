@@ -9,7 +9,7 @@ const taskSchema = new mongoose.Schema({
     },
     approximatePoints: Number,
     time: Number,
-    executor: {
+    _executor: {
         type: ObjectId,
         ref: 'User',
         index: true
@@ -17,6 +17,11 @@ const taskSchema = new mongoose.Schema({
     description: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        enum: ['backlog', 'inProgress', 'testing', 'done', 'archived'],
+        default: 'backlog'
     },
     tag: {
         type: String,

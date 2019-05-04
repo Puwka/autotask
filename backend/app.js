@@ -14,6 +14,7 @@ const controllersDir = path.join(__dirname, 'controllers');
 const app = new Koa();
 app
     .use(bodyParser())
+    .use(middlewares.logger)
     .use(middlewares.checkAuth);
 
 const files = readDir(controllersDir)

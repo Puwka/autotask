@@ -11,7 +11,24 @@ const userSchema = new mongoose.Schema({
     avaColors: {
         top: String,
         bottom: String
+    },
+    spec: {
+        type: String,
+        enum: ['js', 'python', 'html']
     }
 });
+
+
+function formatPublic() {
+    return {
+        id: this._id,
+        role: this.role,
+        name: this.name,
+        avaColors: this.avaColors
+    }
+};
+
+userSchema.method('formatPublic', formatPublic);
+
 
 mongoose.model('User', userSchema);

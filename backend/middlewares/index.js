@@ -25,6 +25,12 @@ const checkAuth = async (ctx, next) => {
     await next();
 };
 
+const logger = async (ctx, next) => {
+    console.log(`${ctx.request.method} ${ctx.request.path}`);
+    await next()
+};
+
 module.exports = {
     checkAuth,
+    logger
 };

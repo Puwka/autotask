@@ -7,4 +7,5 @@ module.exports = Router()
     .get('/list', actions.getTasksList)
     .post('/', actions.postTaskCreate)
     .put('/:task', actions.putTask)
+    .get('/:task', actions.getTask)
     .delete('/:task', actions.deleteTask);
