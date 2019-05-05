@@ -31,4 +31,4 @@ files.forEach(file => {
         .use(controller.allowedMethods());
 });
 
-app.listen(config.PORT, '192.168.0.104', () => console.log(`server spinning on ${config.PORT}`));
+app.listen(config.PORT, () => console.log(`server spinning on ${config.PORT}`));

@@ -4,6 +4,12 @@
             <div>
                 <h3 class="mb-0">{{ task.title }}</h3>
                 <div>Тэг: {{ task.tag }}</div>
+                <div v-if="task.executor" class="card__executor">
+                    <div
+                        class="card__avatar"
+                        :style="avatarBg" />
+                    {{ task.executor.name }}
+                </div>
             </div>
         </v-card-title>
         <v-card-actions>
@@ -72,12 +78,18 @@ export default {
             dialogPoints: false
         }
     },
+    computed: {
+        avatarBg() {
+            return `background: linear-gradient(180deg, ${this.task.executor.avaColors.top}, ${this.task.executor.avaColors.bottom});`
+        }
+    },
     methods: {
         ...mapActions(['deleteTask', 'editTask']),
         toDone() {
             const task = {
                 ...this.task,
-                status: 'done'
+                status: 'done',
+                executor: this.task.executor.id
             }
             this.editTask(task)
         }
@@ -88,5 +100,17 @@ export default {
 <style lang="scss" scoped>
     .card {
         margin-bottom: 20px;
+
+        &__executor {
+            display: flex;
+            align-items: center;
+        }
+
+        &__avatar {
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+        }
     }
 </style>

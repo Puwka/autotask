@@ -62,7 +62,7 @@ export default {
         return {
             task: {
                 status: 'testing',
-                time: 0
+                time: 0,
             }
         }
     },
@@ -72,7 +72,7 @@ export default {
                 if (this.value) {
                     this.getTask(this.taskId)
                         .then(res => {
-                            this.task = {  ...res.task, ...this.task }
+                            this.task = { ...res.task, ...this.task, executor: res.task.executor.id }
                         })
                 }
                 return this.value
